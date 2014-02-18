@@ -1,0 +1,27 @@
+I've got this great idea for issues to be capable of referencing lines of code in files
+in particular commits. So that we could have an issue looking like
+
+
+```
+remove bolierplate
+---
+&[Boilerplate in issue script code](/issue#122-125)
+```
+
+And when we run ``issues view id`` it will be expanded to something like
+
+
+```
+remove boilerplate
+---
+
+    Boilerplate in issue script code (file: /issue; git head: c23f9a)
+    
+    122   # wow how hardcode much boilerplate                             
+    123   [ -d .issues/open/$path ] && view_do open/$path $* && ok        
+    124   [ -d .issues/resolved/$path ] && view_do resolved/$path $* && ok
+    125   [ -d .issues/wontfix/$path ] && view_do wontfix/$path $* && ok  
+
+```
+
+Would be cool, wouldn't it?
