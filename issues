@@ -36,16 +36,20 @@ closed() {
   display .issues/resolved && ok
 }
 
+#nextid() {
+#  [ -z $1 ] && path=.issues || path=.issues/$1/..
+#  count=1
+#  for tag in $path/*; do
+#    if [ -d $tag ]; then
+#      echo $tag >> /tmp/dbg
+#      (( count+=$(ls -1p $tag | grep / | wc -l) ))
+#    fi
+#  done
+#  echo $count
+#}
+
 nextid() {
-  [ -z $1 ] && path=.issues || path=.issues/$1/..
-  count=1
-  for tag in $path/*; do
-    if [ -d $tag ]; then
-      echo $tag >> /tmp/dbg
-      (( count+=$(ls -1p $tag | grep / | wc -l) ))
-    fi
-  done
-  echo $count
+  </dev/urandom tr -dc a-z0-9_ | head -c4
 }
 
 add() {
