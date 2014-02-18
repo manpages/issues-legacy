@@ -1,0 +1,139 @@
+#!/bin/bash
+
+# Print usage and exit from anywhere.
+export TOP_PID=$$
+term() {
+  kill -s TERM $TOP_PID
+}
+
+ok() {
+  kill -s USR1 $TOP_PID
+}
+trap "echo Ok; exit 0" USR1
+
+init() {
+  [ -d '.issues' ] || mkdir -p .issues/open .issues/resolved .issues/wontfix
+}
+
+display() {
+  [ -z $2 ] && what='title' || what=$2
+  for issue in $(ls -1pt $1 | grep /); do
+    echo -n "$issue "
+    cat $1/$issue/$what
+  done
+}
+
+open() {
+  display .issues/open && ok
+}
+
+resolved() {
+  display .issues/resolved && ok
+}
+
+closed() {
+  display .issues/wontfix
+  display .issues/resolved && ok
+}
+
+nextid() {
+  [ -z $1 ] && path=.issues || path=.issues/$1/..
+  count=1
+  for tag in $path/*; do
+    if [ -d $tag ]; then
+      echo $tag >> /tmp/dbg
+      (( count+=$(ls -1p $tag | grep / | wc -l) ))
+    fi
+  done
+  echo $count
+}
+
+add() {
+  path=$1
+  echo "ADDING TO ${path}"
+  shift
+
+  errmsg='Short summary is required'
+  trap "echo $errmsg; exit 1" TERM
+  [ -z $1 ] && term
+
+  issue=".issues/$path/$(nextid $path)/"
+  title="$*"
+  echo "What do you have to say? Ctrl-D stops. Leave blank to cancel."
+  summary=$(cat)
+
+  errmsg='Canceled'
+  trap "echo $errmsg; exit 1" TERM
+  [ -z "$summary" ] && term
+
+  mkdir -p "$issue"
+  echo "$title" > "$issue/title"
+  echo "$summary" > "$issue/summary"
+
+  errmsg='Ok'
+  trap "echo $errmsg; exit 0" TERM
+  term
+}
+
+comment() {
+  path=$1
+  shift 
+
+  # wow how hardcode much boilerplate
+  [ -d .issues/open/$path ] && add open/$path $*
+  [ -d .issues/resolved/$path ] && add resolved/$path $*
+  [ -d .issues/wontfix/$path ] && add wontfix/$path $*
+
+  errmsg="$path not found in .issues or no summary supplied"
+  trap "echo $errmsg; exit 1" TERM
+  term
+}
+
+resolve() {
+  id=$1
+  shift
+
+  [ -d .issues/open/$id ] && mv -v .issues/open/$id .issues/resolved/ && trap "exit 0" TERM && term
+
+  errmsg="$id is not an open issue"
+  trap "echo $errmsg; exit 1" TERM
+  term
+}
+
+wontfix() {
+  id=$1
+  shift
+
+  [ -d .issues/open/$id ] && mv .issues/open/$id .issues/wontfix/
+
+  errmsg="$id is not an open issue"
+  trap "echo $errmsg; exit 1" TERM
+  term
+}
+
+errmsg='Git repository not found.'
+trap "echo $errmsg; exit 1" TERM
+[ -d '.git' ] || term
+
+errmsg='Supported actions: init, open, add, comment, resolve, wontfix'
+trap "echo $errmsg; exit 1" TERM
+verb=$([ -z $1 ] && term || echo $1 )
+shift
+
+# initialization
+[ $verb == 'init' ] && init && ok
+
+# tags
+[ $verb == 'open' ] && open
+[ $verb == 'closed' ] && closed
+[ $verb == 'resolved' ] && resolved
+
+# work
+[ $verb == 'add' ] && add open $*
+[ $verb == 'comment' ] && comment $*
+[ $verb == 'resolve' ] && resolve $*
+[ $verb == 'wontfix' ] && wontfix $*
+
+errmsg='Supported actions: init, open, add, comment, resolve, wontfix'
+trap "echo $errmsg; exit 1" TERM
+term
