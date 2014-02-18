@@ -115,11 +115,50 @@ wontfix() {
   term
 }
 
+view() {
+  path=$1
+  shift 
+
+  # wow how hardcode much boilerplate
+  [ -d .issues/open/$path ] && view_do open/$path $* && ok
+  [ -d .issues/resolved/$path ] && view_do resolved/$path $* && ok
+  [ -d .issues/wontfix/$path ] && view_do wontfix/$path $* && ok
+
+  errmsg="$path not found in .issues or no summary supplied"
+  trap "echo $errmsg; exit 1" TERM
+  term
+}
+
+view_do() {
+  path=$1
+  [ -z $2 ] && depth=0 || depth=$2
+  indent=""
+  for x in {0..$depth}; do
+    indent="  ${indent}"
+  done
+
+  if [ -d .issues/$path ]; then
+    cat <(echo -n "$path/ ")  \
+        .issues/$path/title    \
+        <(echo "---")           \
+        .issues/$path/summary  | \
+      awk "{sub(/^/,\"${indent}\");print}" 
+    indent+=1
+    for sub in $(ls -1pt .issues/$path/ | grep /); do
+      view_do $path/$sub 
+    done
+  else
+    errmsg="$path not found"
+    trap "echo $errmsg; exit 1" TERM
+    term
+  fi
+}
+
 errmsg='Git repository not found.'
 trap "echo $errmsg; exit 1" TERM
 [ -d '.git' ] || term
 
-errmsg='Supported actions: init, open, add, comment, resolve, wontfix'
+errmsg='Supported actions: init, open, add, comment, resolve, wontfix, read'
 trap "echo $errmsg; exit 1" TERM
 verb=$([ -z $1 ] && term || echo $1 )
 shift
@@ -137,6 +176,9 @@ shift
 [ $verb == 'comment' ] && comment $*
 [ $verb == 'resolve' ] && resolve $*
 [ $verb == 'wontfix' ] && wontfix $*
+
+# read
+[ $verb == 'view' ] && view $*
 
 errmsg='Supported actions: init, open, add, comment, resolve, wontfix'
 trap "echo $errmsg; exit 1" TERM
