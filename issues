@@ -163,7 +163,7 @@ pretty_print() {
   done #                                   vvv This thing looks like a very tall lambda
   cat <(echo -n "$path/ ")                   \
       .issues/$path/title                     \
-      <(echo) <(echo "---")                    \
+      <(echo "---") <(echo)                    \
       <(dereference .issues/$path/summary)      \
       <(echo) <(echo "* * *") <(echo) <(echo)   |\
     awk "{print \"${indent}\"\$0}"
