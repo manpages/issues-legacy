@@ -23,6 +23,10 @@ display() {
   done
 }
 
+context() {
+  awk "NR==$2,NR==$3{print NR \"  \" \$0}" $1
+}
+
 open() {
   display .issues/open && ok
 }
@@ -131,27 +135,38 @@ view() {
 
 view_do() {
   path=$1
-  [ -z $2 ] && depth=0 || depth=$2
-  indent=""
-  for x in {0..$depth}; do
-    indent="  ${indent}"
-  done
+  [ -z $2 ] && depth=1 || depth=$2
 
   if [ -d .issues/$path ]; then
-    cat <(echo -n "$path/ ")  \
-        .issues/$path/title    \
-        <(echo "---")           \
-        .issues/$path/summary  | \
-      awk "{sub(/^/,\"${indent}\");print}" 
-    indent+=1
+    pretty_print $path $depth
+    (( depth+=1 ))
     for sub in $(ls -1pt .issues/$path/ | grep /); do
-      view_do $path/$sub 
+      view_do $path/$sub $depth
     done
   else
     errmsg="$path not found"
     trap "echo $errmsg; exit 1" TERM
     term
   fi
+}
+
+dereference() {
+  cat $1
+}
+
+pretty_print() {
+  path=$1
+  depth=$2
+  indent=""
+  for x in $(seq 0 $depth); do
+    indent+="  "
+  done #                                   vvv This thing looks like a very tall lambda
+  cat <(echo -n "$path/ ")                   \
+      .issues/$path/title                     \
+      <(echo) <(echo "---")                    \
+      <(dereference .issues/$path/summary)      \
+      <(echo) <(echo "* * *") <(echo) <(echo)   |\
+    awk "{print \"${indent}\"\$0}"
 }
 
 errmsg='Git repository not found.'
@@ -166,10 +181,12 @@ shift
 # initialization
 [ $verb == 'init' ] && init && ok
 
-# tags
+# major tags
 [ $verb == 'open' ] && open
 [ $verb == 'closed' ] && closed
 [ $verb == 'resolved' ] && resolved
+
+# tags
 
 # work
 [ $verb == 'add' ] && add open $*
