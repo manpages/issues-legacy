@@ -1,7 +1,29 @@
 #!/bin/bash
 
-# Print usage and exit from anywhere.
-export TOP_PID=$$
+# Include
+abs="$(dirname $(readlink -f "$0"))"
+[ -d $abs/include/ ] && include_dir=$abs/include || include_dir=/var/lib/issues
+for lib in $include_dir/*; do
+  eval "$(cat $lib)"
+done
+
+# Required for control flow
+export ISSUES_TOP_PID=$$
+
+# Settings
+set_debug_level "debug" # debug info messages errors none
+get_config
+
+[ -z $1 ] && err "Not enough arguments.\n$(usage)" || verb=$1
+debug "Verb: $verb"
+
+[ $verb == "init" ]  && init && ok
+[ $verb == "fetch" ] && fetch && ok
+
+err "$(usage)"
+
+# NO WAI
+
 term() {
   kill -s TERM $TOP_PID
 }
