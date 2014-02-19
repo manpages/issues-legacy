@@ -1,0 +1,5 @@
+On the second thought, it's not *that* cool in the long run, if we don't expand this context
+as we type the issue. The reason is that the line numbers will most certainly change fast
+and people who will look at the issue, say, next morning won't be able to see the correct
+context (that the author of the issue had in mind). I'll implement this anyway, but we must
+address this concern.
