@@ -1,4 +1,4 @@
-set_debug_level() {
+issues_set_debug_level() {
   export ISSUES_DEBUG_LEVEL=5
   [ $1 == "none" ] && export ISSUES_DEBUG_LEVEL=0
   [ $1 == "errors" ] && export ISSUES_DEBUG_LEVEL=1

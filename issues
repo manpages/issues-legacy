@@ -11,18 +11,22 @@ done
 export ISSUES_TOP_PID=$$
 [ -z $ISSUES_DEBUG_LEVEL ] && export ISSUES_DEBUG_LEVEL=5
 [ -z $1 ] && err "Not enough arguments.\n$(usage)" || verb=$1
+shift
 debug "Verb: $verb"
 
 # Initialization is a top priority action
-[ $verb == "init" ] && init && ok
+[ $verb == "init" ] && issues_init && ok
 
 # Settings
-get_config
-[ -z $ISSUES_DEBUG_LEVEL ] && set_debug_level $issues_debug_level
+issues_get_config
+[ -z $ISSUES_DEBUG_LEVEL ] && issues_set_debug_level $issues_debug_level
 
-[ $verb == "fetch" ] && fetch && ok
-
-err "$(usage)"
+# Dispatch
+issues_verbs=('fetch' 'add' 'add-named')
+for i in ${issues_verbs[@]}; do
+  [ $verb == $i ] && issues_$i $* && ok
+done
+err "$(issues_usage)"
 
 # NO WAI
 

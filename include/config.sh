@@ -1,4 +1,4 @@
-get_config() {
+issues_get_config() {
   [ -f .issues/config ] || err "No configuration file found. Consider running 'issues init'."
   info "Evaluating .issues/config..."
   eval "$(cat .issues/config)"
