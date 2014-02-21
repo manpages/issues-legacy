@@ -10,7 +10,7 @@ done
 # Required for control flow
 export ISSUES_TOP_PID=$$
 [ -z $ISSUES_DEBUG_LEVEL ] && export ISSUES_DEBUG_LEVEL=5
-[ -z $1 ] && err "Not enough arguments.\n$(usage)" || verb=$1
+[ -z $1 ] && err "Not enough arguments.\n$(issues_usage)" || verb=$1
 shift
 debug "Verb: $verb"
 

@@ -8,7 +8,7 @@ Currently supported verbs:
                        example: issues add 'Write a manual page for the tool'
   + add-named(an):     adds a named issue. keep the name short and distinct
                        example: issues add-named man 'Write a manual page for the tool'
-  + sub(i):            includes a sub-issue with random four-symbol id into a parent issue
+  + sub(s):            includes a sub-issue with random four-symbol id into a parent issue
                        example: issues sub /man 'Figure out how to write manual pages'
   + sub-named(sn):     includes a named issue into a parent issue
                        example: issues sub-named /man research 'Figure out how to write manual pages'
