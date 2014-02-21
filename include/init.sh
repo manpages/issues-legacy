@@ -28,6 +28,8 @@ issues_dir="$(issues_get_issues_dir)"
 issues_project="${PWD##*/}"
 # URI of Git repository that stores issues of your team's projects
 issues_url="git@github.com:\${issues_team}/issues.git"
+# List of allowed statuses
+issues_statuses=('open' 'resolved' 'working' 'rejected') 
 # Debug level of issues program.
 issues_debug_level="messages"
 CONFIG
