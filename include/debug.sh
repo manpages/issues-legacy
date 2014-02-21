@@ -8,7 +8,7 @@ issues_set_debug_level() {
 }
 
 error() {
-  [[ $ISSUES_DEBUG_LEVEL -ge 1 ]] && echo -e "[error] $1"
+  [[ $ISSUES_DEBUG_LEVEL -ge 1 ]] && echo -e "[error] $1" 1>&2
 }
 
 message() {
@@ -20,5 +20,5 @@ info() {
 }
 
 debug() {
-  [[ $ISSUES_DEBUG_LEVEL -ge 4 ]] && echo -e "[debug] $1"
+  [[ $ISSUES_DEBUG_LEVEL -ge 4 ]] && echo -e "[debug] $1" 1>&2
 }
