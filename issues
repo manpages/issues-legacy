@@ -84,7 +84,7 @@ closed() {
 #}
 
 nextid() {
-  </dev/urandom tr -dc a-z0-9_ | head -c4
+  LC_CTYPE=C </dev/urandom tr -dc a-z0-9_ | head -c4
 }
 
 add() {

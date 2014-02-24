@@ -22,7 +22,7 @@ issues_sub-named() {
 issues_nextid() {
   debug "Generating issue id"
   path=$1
-  candidate=$(</dev/urandom tr -dc a-z0-9_ | head -c4)
+  candidate=$(LC_CTYPE=C </dev/urandom tr -dc a-z0-9_ | head -c4)
   debug "Candidate id: ${candidate}"
   [ -d "$issues_root/$path/$candidate" ] && issues_nextid $path || echo $candidate
 }
