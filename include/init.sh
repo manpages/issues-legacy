@@ -4,7 +4,7 @@ issues_init() {
   [ -d .git ] || err "Not a git project"
   [ -d $(issues_get_issues_dir) ] && info "Issues directory is already created, skipping" || mkdir -p $(issues_get_issues_dir) 
   [ -f .issues/config ] && info "Issues configuration is already created, skipping" || issues_init_dot_issues
-  message "The issues configuration is bootstrapped and written to .issues/config\nNow put credentials there and run 'init fetch'."
+  message "The issues configuration is bootstrapped and written to .issues/config\nNow put credentials there and run 'issues fetch'."
 }
 
 issues_get_issues_dir() {
