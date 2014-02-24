@@ -12,7 +12,7 @@ issues_fetch_do() {
     git clone $issues_url "$issues_dir/$issues_team"
     if [ ! -d "$issues_root" ]; then
       debug "Project directory not found, creating it and pushing to the team issue tracker"
-      mkdir "$issues_root"
+      mkdir -p "$issues_root"
       touch "$issues_root/.gitignore"
       ( cd "$issues_dir/$issues_team" && \
         git add . && git commit -am "Start tracking $issues_project project" && \
