@@ -41,7 +41,7 @@ issues_ls() {
 }
 
 issues_list() {
-  issues_fetch
+  issues_fetch_if_needed
   if [ -z "$2" ]; then 
     debug "issues_list> No id chain supplied, using /"
     issues_list_do "$1" /

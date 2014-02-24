@@ -2,6 +2,10 @@ issues_fetch() {
   issues_fetch_do || err "Fetching of the current issue tree failed. See output."
 }
 
+issues_fetch_if_needed() {
+	debug "Issues fetch id needed, not implemented"
+}
+
 issues_fetch_do() {
   info "Fetching the current issue tree..."
   if [ -d "$issues_dir/$issues_team" ]; then

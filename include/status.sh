@@ -16,7 +16,7 @@ if [ -f ".issues/config" ]; then
     new_status=$1 && shift
     [ -z "$1" ] && err "Id chain (like 'wasd/x0c3') is required for setting status to an issue" || path="$1"
     [ ! -d "$issues_root/$path" ] && err "$path is not a valid id chain"
-    issues_fetch
+    issues_fetch_if_needed
     echo -n "$new_status" > "$issues_root/$path/status"
     issues_git_push "Set status for #$(basename $path) to $new_status"
   }

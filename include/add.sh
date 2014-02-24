@@ -33,7 +33,7 @@ issues_add_do() {
   [ -z "$2" ] && err "Name is required for a named issue"        || id="$2"
   shift && shift
   [ -z "$1" ] && err "Issue description is required"             || title="$*"
-  issues_fetch
+  issues_fetch_if_needed
   [ -d "$issues_root/$path/$id" ] && err "Issue with id ${id} already exists in ${path}"
   issue="$issues_root/$path/$id"
   mkdir "$issue"
