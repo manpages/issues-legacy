@@ -9,24 +9,6 @@ while [ -h "$SOURCE" ]; do
 	[[ $SOURCE != /* ]] && SOURCE="$DIR/$SOURCE"
 done
 DIR="$( cd -P "$( dirname "$SOURCE" )" && pwd )"
-
-# Include
-#issues_readlink-f() { # Mac OS X readlink -f hack
-  #file=$1
-  #_max_jumps=1000
-  #cd $(dirname $file)
-  #file=$(basename $file)
-  #jmp_count=0
-  #while [ -L "$file" ] && $jmp_count < $_max_jumps; do
-    #file="$(readlink "$file")"
-    #cd "$(dirname "$file")"
-    #file="$(basename "$file")"
-  #done
-  #full_path="$(pwd -P)"
-  #echo "$full_path/$file"
-#}
-#lnk="$(issues_readlink-f "$0")"
-#abs="$(dirname $lnk)"
 [ -d $DIR/include/ ] && include_dir=$DIR/include || include_dir=/var/lib/issues
 for lib in $include_dir/*; do
   eval "$(cat $lib)"
