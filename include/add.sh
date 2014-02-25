@@ -27,13 +27,12 @@ issues_nextid() {
   [ -d "$issues_root/$path/$candidate" ] && issues_nextid $path || echo $candidate
 }
 
-issues_add_do() {
+issues_add_generic() {
   debug "Executing generic issue creation function"
   [ -z "$1" ] && err "Path is required for creating a sub-issue" || path="$1"
   [ -z "$2" ] && err "Name is required for a named issue"        || id="$2"
   shift && shift
   [ -z "$1" ] && err "Issue description is required"             || title="$*"
-  issues_fetch_if_needed
   [ -d "$issues_root/$path/$id" ] && err "Issue with id ${id} already exists in ${path}"
   issue="$issues_root/$path/$id"
   mkdir "$issue"
@@ -45,6 +44,10 @@ issues_add_do() {
   echo -n "untagged" > "$issue/tags"
   echo "$(issues_git_user)" > "$issue/author"
   echo "$(issues_git_headhash)" > "$issue/head"
+}
+
+issues_add_do() {
+  issues_add_generic $*
   issues_git_push "Add issue #${id}: ${title}"
 }
 
