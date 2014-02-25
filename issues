@@ -2,24 +2,32 @@
 # PID of the root process
 export ISSUES_TOP_PID=$$
 
+SOURCE="${BASH_SOURCE[0]}"
+while [ -h "$SOURCE" ]; do
+	DIR="$( cd -P "$( dirname "$SOURCE" )" && pwd )"
+	SOURCE="$(readlink "$SOURCE")"
+	[[ $SOURCE != /* ]] && SOURCE="$DIR/$SOURCE"
+done
+DIR="$( cd -P "$( dirname "$SOURCE" )" && pwd )"
+
 # Include
-issues_readlink-f() { # Mac OS X readlink -f hack
-  file=$1
-  _max_jumps=1000
-  cd $(dirname $file)
-  file=$(basename $file)
-  jmp_count=0
-  while [ -L "$file" ] && $jmp_count < $_max_jumps; do
-    file="$(readlink "$file")"
-    cd "$(dirname "$file")"
-    file="$(basename "$file")"
-  done
-  full_path="$(pwd -P)"
-  echo "$full_path/$file"
-}
-lnk="$(issues_readlink-f "$0")"
-abs="$(dirname $lnk)"
-[ -d $abs/include/ ] && include_dir=$abs/include || include_dir=/var/lib/issues
+#issues_readlink-f() { # Mac OS X readlink -f hack
+  #file=$1
+  #_max_jumps=1000
+  #cd $(dirname $file)
+  #file=$(basename $file)
+  #jmp_count=0
+  #while [ -L "$file" ] && $jmp_count < $_max_jumps; do
+    #file="$(readlink "$file")"
+    #cd "$(dirname "$file")"
+    #file="$(basename "$file")"
+  #done
+  #full_path="$(pwd -P)"
+  #echo "$full_path/$file"
+#}
+#lnk="$(issues_readlink-f "$0")"
+#abs="$(dirname $lnk)"
+[ -d $DIR/include/ ] && include_dir=$DIR/include || include_dir=/var/lib/issues
 for lib in $include_dir/*; do
   eval "$(cat $lib)"
 done
