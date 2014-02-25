@@ -3,7 +3,7 @@ issues_usage() {
 Currently supported verbs: 
 
   + init:                 initializes directory structure, populates .issues/config
-  + fetch:                pulls or clones the repository with accordance to .issues/config
+  + pull:                 pulls or clones the repository with accordance to .issues/config
   + add(a):               adds an issue with random four-symbol id
                           example: issues add 'Write a manual page for the tool'
   + add-named(an):        adds a named issue. keep the name short and distinct
