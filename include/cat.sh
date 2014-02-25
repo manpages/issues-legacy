@@ -19,11 +19,11 @@ issues_print_pretty_() {
 
 issues_cat() {
 	[ -z "$1" ] && err "issue id is required"
-        issue="$issues_root/$1"
+  issue="$issues_root/$1"
 	debug "issues cat $*"
-        [ -d "$issue" ] || err "$id is not a valid id"
-        for child in $(find $issue -type d | xargs ls -1td); do
-		issues_print_pretty_ $child
-        done
-        return 0
+  [ -d "$issue" ] || err "$id is not a valid id"
+  for child in $(find $issue -type d | xargs ls -1td); do
+    issues_print_pretty_ $child
+  done
+  return 0
 }
