@@ -12,11 +12,16 @@ Currently supported verbs:
                           example: issues sub /man 'Figure out how to write manual pages'
   + sub-named(sn):        includes a named issue into a parent issue
                           example: issues sub-named /man research 'Figure out how to write manual pages'
+  + comment id:           adds a commentary
+                          example: issues comment ocaw
   + open, resolved, etc:  sets the status of an issue to the one supplied
                           example: issues resolved ocaw/wasd
   + list status [id]:     lists all the issues of given status under optionally supplied id chain in 
                           reverse chronological order
                           example: issues list open ocaw/wasd
   + cat id:               pretty-prints discussion of an issue
+                          example: issues cat ocaw
+  + tree id:              pretty-prints discussion of an issue if form of indented tree
+                          example: issues tree ocaw
 USAGE
 }
