@@ -5,17 +5,25 @@ issues_print_short_() {
 
 issues_print_pretty_() {
 	path=$1
-	echo "ISSUE ${path#$issues_root}/ "
-	for item in status tags; do # items not ending with aline feed
-		issues_print_short_ $item
-		cat "$path/$item" 2>/dev/null
-		echo " "
-	done
+  [ -f $path/status ] && t="ISSUE" || t="COMMENT"
+  printf "%7s: " $t
+	echo "${path#$issues_root}/ "
+  if [ $t == "ISSUE" ]; then
+    for item in status tags; do # items not ending with aline feed
+      issues_print_short_ $item
+      cat "$path/$item" 2>/dev/null
+      echo " "
+    done
+  fi
 	for item in author title; do
 		issues_print_short_ $item
 		cat "$path/$item" 2>/dev/null
 	done
   cat "$path/commentary" | awk '{print "         "$0}'
+}
+
+issues_print_compact() {
+  path=$1
 }
 
 issues_cat() {
