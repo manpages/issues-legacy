@@ -23,5 +23,9 @@ Currently supported verbs:
                           example: issues cat ocaw
   + tree id:              pretty-prints discussion of an issue if form of indented tree
                           example: issues tree ocaw
+  + tag:                  tags an issue (doesn't work with comments) with a tag
+                          example: issues tag ocaw seen
+  + rmtag:                removes a tag from an issue
+                          example: issues rmtag ocaw fun
 USAGE
 }

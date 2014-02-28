@@ -26,7 +26,8 @@ issues_rmtag() {
   IFS=, read -ra tags <<< "$(cat $issue/tags)"
   tags1=(  )
   for i in ${tags[@]}; do
-    [ i == $tag ] || tags1=( ${tags1[@]} "$i" )
+    debug "Found tag: ${i}"
+    [ $i == $tag ] || tags1=( ${tags1[@]} "$i" )
   done
   printf "%q," ${tags1[@]} > "$issue/tags"
 }
