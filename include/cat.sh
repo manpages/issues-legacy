@@ -1,18 +1,21 @@
+issues_pretty_x=8
+
 issues_print_short_() {
         #echo -n "$1:	"
-	printf "%7.7s: " $1
+	printf "%${issues_pretty_x}.${issues_pretty_x}s: " $1
 }
 
 issues_print_pretty_() {
 	path=$1
   [ -f $path/status ] && t="ISSUE" || t="COMMENT"
-  printf "%7s: " $t
+  printf "%${issues_pretty_x}s: " $t
 	echo "${path#$issues_root}/ "
   if [ $t == "ISSUE" ]; then
-    for item in status tags; do # items not ending with aline feed
-      issues_print_short_ $item
-      cat "$path/$item" 2>/dev/null
-      echo " "
+    for item in "status" "tags" "assignee"; do # items not ending with aline feed
+      if [ -f "$path/$item" ]; then
+        issues_print_short_ $item
+        cat "$path/$item" <(echo) 2>/dev/null
+      fi
     done
   fi
 	for item in author title; do

@@ -29,7 +29,8 @@ issues_get_config
 
 # Dispatch
 issues_verbs=('pull' 'add' 'add-named' 'a' 'an' 'cat' 'tree' 'comment' 
-              'sub' 'sub-named' 's' 'sn' 'list' 'ls' 'tag' 'tags' 'rmtag')
+              'sub' 'sub-named' 's' 'sn' 'list' 'ls' 'tag' 'tags' 'rmtag'
+              'assign' )
 issues_verbs=( ${issues_verbs[@]} ${issues_statuses[@]} )
 for i in ${issues_verbs[@]}; do
   [ $verb == $i ] && issues_$i $* && ok

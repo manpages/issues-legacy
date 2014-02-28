@@ -27,5 +27,7 @@ Currently supported verbs:
                           example: issues tag ocaw seen
   + rmtag:                removes a tag from an issue
                           example: issues rmtag ocaw fun
+  + assign:               assigns a person to an issue
+                          example: issues assign ocaw/wasd magbo
 USAGE
 }
