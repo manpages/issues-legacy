@@ -33,6 +33,6 @@ issues_verbs=('pull' 'add' 'add-named' 'a' 'an' 'cat' 'tree' 'comment'
               'assign' )
 issues_verbs=( ${issues_verbs[@]} ${issues_statuses[@]} )
 for i in ${issues_verbs[@]}; do
-  [ $verb == $i ] && issues_$i $* && ok
+  [ $verb == $i ] && issues_$i $@ && ok
 done
 err "$(issues_usage)"

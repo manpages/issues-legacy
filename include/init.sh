@@ -18,7 +18,7 @@ issues_init_dot_issues() {
   mkdir -p .issues
   message "Configuration file was written to .issues/config. Review it and run 'issues fetch'."
   cat > .issues/config <<CONFIG
-## This file gets evalled, so no spaces near =
+## This file gets evаlled, so no spaces near =
 ## Debug levels: debug info messages errors none
 # Name of your team
 issues_team="default"
