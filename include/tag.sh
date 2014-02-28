@@ -12,9 +12,11 @@ issues_tag() {
   eval tags=($(printf "%q\n" "${tags[@]}" | sort -u))
   printf "%q," ${tags[@]} > "$issue/tags"
   issues_rmtag "$arg1" "untagged" # dirty dirty
+  issues_git_push "Tagged #$arg1 with $tag"
 }
 
 issues_rmtag() {
+  arg1="$1"
   debug "issues_rmtag $*"
   [ -z "$1" ] && err "An id chain is needed to tag an issue" || issue="$issues_root/$1"
   shift
@@ -30,6 +32,7 @@ issues_rmtag() {
     [ $i == $tag ] || tags1=( ${tags1[@]} "$i" )
   done
   printf "%q," ${tags1[@]} > "$issue/tags"
+  issues_git_push "Removed $tag from #${arg1}"
 }
 
 issues_tags() {
