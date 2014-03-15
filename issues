@@ -25,7 +25,6 @@ debug "Verb: $verb"
 
 # Settings
 issues_get_config
-echo $issues_debug_level
 [ -z $ISSUES_DEBUG_LEVEL ] && issues_set_debug_level $issues_debug_level
 
 # Dispatch
