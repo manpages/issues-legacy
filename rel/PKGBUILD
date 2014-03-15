@@ -1,0 +1,40 @@
+pkgname=issues-git
+_pkgname=issues
+pkgver=359425eff2b028cc72de8321c11406428ea01634
+pkgrel=1
+pkgdesc="A bullshit-free issue tracker"
+arch=('i686' 'x86_64')
+url="http://memorici.de"
+license=('WTFPL')
+depends=('bash')
+makedepends=('git')
+conflicts=('issues')
+provides=('issues')
+source=()
+
+prepare() {
+  echo "DIRECTORY LISTING $(ls -la .)"
+  echo "PWD $(pwd)"
+  git clone git.memorici.de:issues
+}
+
+build() {
+  echo "Issues are distributed as a set of shell scripts. Nothing to build."
+}
+
+package() {
+  echo "DIRECTORY LISTING $(ls -la .)"
+  echo "PWD $(pwd)"
+  echo "NOTE THAT SRCDIR IS ${srcdir} AND _PKGNAME IS ${_pkgname}"
+  cd "${srcdir}/${_pkgname}"
+  echo "DIRECTORY LISTING $(ls -la .)"
+  echo "PWD $(pwd)"
+  cd "include"
+  echo "DIRECTORY LISTING $(ls -la .)"
+  echo "PWD $(pwd)"
+  mkdir -p "${pkgdir}/var/lib/${_pkgname}/"
+  cp -ruvt "${pkgdir}/var/lib/${_pkgname}/" "."
+  cd "${srcdir}/${_pkgname}"
+  mkdir -p "${pkgdir}/usr/bin/"
+  cp "issues" "${pkgdir}/usr/bin/"
+}
