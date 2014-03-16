@@ -19,15 +19,13 @@ done
 [ -z $1 ] && err "Not enough arguments.\n$(issues_usage)" || verb=$1
 shift
 debug "Verb: $verb"
-echo "DEBUG LEVEL: ${ISSUES_DEBUG_LEVEL}"
-echo "DEBUG CONF:  ${issues_debug_level}"
 
 # Initialization is a top priority action
 [ $verb == "init" ] && issues_init && ok
 
 # Settings
 issues_get_config
-[ -z $ISSUES_DEBUG_LEVEL ] && issues_set_debug_level $issues_debug_level
+[ -z $issues_debug_level ] || issues_set_debug_level $issues_debug_level
 
 # Dispatch
 issues_verbs=('pull' 'add' 'add-named' 'a' 'an' 'cat' 'tree' 'comment' 
