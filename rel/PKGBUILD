@@ -1,6 +1,6 @@
 pkgname=issues-git
 _pkgname=issues
-pkgver=359425eff2b028cc72de8321c11406428ea01634
+pkgver=master
 pkgrel=1
 pkgdesc="A bullshit-free issue tracker"
 arch=('i686' 'x86_64')
