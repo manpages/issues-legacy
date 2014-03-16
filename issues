@@ -19,6 +19,7 @@ done
 [ -z $1 ] && err "Not enough arguments.\n$(issues_usage)" || verb=$1
 shift
 debug "Verb: $verb"
+echo "DEBUG LEVEL: ${ISSUES_DEBUG_LEVEL}"
 
 # Initialization is a top priority action
 [ $verb == "init" ] && issues_init && ok
