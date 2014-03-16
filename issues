@@ -20,6 +20,7 @@ done
 shift
 debug "Verb: $verb"
 echo "DEBUG LEVEL: ${ISSUES_DEBUG_LEVEL}"
+echo "DEBUG CONF:  ${issues_debug_level}"
 
 # Initialization is a top priority action
 [ $verb == "init" ] && issues_init && ok
