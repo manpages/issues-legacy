@@ -31,7 +31,10 @@ issues_url="git@github.com:\${issues_team}/issues.git"
 # List of allowed statuses
 issues_statuses=('open' 'resolved' 'working' 'rejected') 
 # Debug level of issues program.
+## none | errors | messages | info | debug
 issues_debug_level="messages"
+# Set to "manual" to prevent issues from automatically pushing changes to origin
+issues_push_mode="auto"
 CONFIG
   echo ".issues" >> .gitignore
 }

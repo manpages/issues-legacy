@@ -22,7 +22,7 @@ issues_print_pretty_() {
 		issues_print_short_ $item
 		cat "$path/$item" 2>/dev/null
 	done
-  cat "$path/commentary" | awk '{print "         "$0}'
+  cat "$path/commentary" | awk '{print "          "$0}'
 }
 
 issues_print_compact() {

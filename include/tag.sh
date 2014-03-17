@@ -2,17 +2,17 @@ issues_tag() {
   arg1="$1"
   [ -z "$1" ] && err "An id chain is needed to tag an issue"   || issue="$issues_root/$1"
   shift
-  [ -z "$1" ] && err "What do you want to tag the issue with?" || tag="$*"
+  [ -z "$1" ] && err "What do you want to tag the issue with?" || tag0="$*"
   [ -d "$issue" ]      || err "Not a valid id chain"
   [ -f "$issue/tags" ] || err "You can't tag comments nowadays, only issues. This limitation might be lifted someday."
   debug "$issue/tags: $(cat $issue/tags)"
   IFS=, read -ra tags <<< "$(cat $issue/tags)"
-  tags=( ${tags[@]} $tag )
+  tags=( ${tags[@]} $tag0 )
   debug "Unique tags now: $(printf "%q\n" "${tags[@]}" | sort -u)"
   eval tags=($(printf "%q\n" "${tags[@]}" | sort -u))
   printf "%q," ${tags[@]} > "$issue/tags"
-  issues_rmtag "$arg1" "untagged" # dirty dirty
-  issues_git_push "Tagged #$arg1 with $tag"
+  issues_push_mode="manual" issues_rmtag "$arg1" "untagged" # dirty dirty
+  issues_git_push "Tagged #$arg1 with $tag0"
 }
 
 issues_rmtag() {
