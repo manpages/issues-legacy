@@ -9,7 +9,7 @@ issues_fetch_if_needed() {
 issues_pull_do() {
   info "Fetching the current issue tree..."
   if [ -d "$issues_dir/$issues_team" ]; then
-    debug "Issues directory found, pulling last updates from the team."
+    debug "Issues directory $issues_dir/$issues_team found, pulling last updates from the team."
     ( cd "$issues_dir/$issues_team" && git pull )
   else
     debug "Issues directory not found, cloning"
