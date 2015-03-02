@@ -1,5 +1,4 @@
 issues_init() {
-  echo "INIT!"
   info "Adding project to team's issues repository..."
   info "Using $(issues_get_issues_dir) as the issues repository directory."
   [ -d .git ] || err "Not a git project"
