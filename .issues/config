@@ -1,0 +1,17 @@
+## This file gets evаlled, so no spaces near =
+## Debug levels: debug info messages errors none
+# Name of your team
+issues_team="team"
+# Default issues directory (possibly created by issues init)
+issues_dir="${HOME}/.issues"
+# Name of this project
+issues_project="issues-legacy"
+# URI of Git repository that stores issues of your team's projects
+issues_url="git@github.com:manpages/issues-demo.git"
+# List of allowed statuses
+issues_statuses=('open' 'resolved' 'working' 'rejected') 
+# Debug level of issues program.
+## none | errors | messages | info | debug
+issues_debug_level="messages"
+# Set to "manual" to prevent issues from automatically pushing changes to origin
+issues_push_mode="auto"

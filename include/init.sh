@@ -1,4 +1,5 @@
 issues_init() {
+  echo "INIT!"
   info "Adding project to team's issues repository..."
   info "Using $(issues_get_issues_dir) as the issues repository directory."
   [ -d .git ] || err "Not a git project"
@@ -16,7 +17,7 @@ issues_get_issues_dir() {
 
 issues_init_dot_issues() {
   mkdir -p .issues
-  message "Configuration file was written to .issues/config. Review it and run 'issues fetch'."
+  message "Configuration file was written to .issues/config. Review it and run 'issues pull'."
   cat > .issues/config <<CONFIG
 ## This file gets evаlled, so no spaces near =
 ## Debug levels: debug info messages errors none

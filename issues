@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 # PID of the root process
 export ISSUES_TOP_PID=$$
 
@@ -26,7 +26,6 @@ debug "Verb: $verb"
 # Settings
 issues_get_config
 [ -z $issues_debug_level ] || issues_set_debug_level $issues_debug_level
-[ -d $issues_root ] || mkdir -p $issues_root
 
 # Dispatch
 issues_verbs=('pull' 'add' 'add-named' 'a' 'an' 'cat' 'tree' 'comment' 
