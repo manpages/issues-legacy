@@ -15,7 +15,7 @@ source=()
 prepare() {
   echo "DIRECTORY LISTING $(ls -la .)"
   echo "PWD $(pwd)"
-  git clone ssh://gitolite@memorici.de:21984/issues
+  git clone https://github.com/manpages/issues-legacy.git issues
 }
 
 build() {
