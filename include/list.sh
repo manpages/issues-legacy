@@ -18,9 +18,12 @@ issues_print_compact_maybe() {
   debug "Child depth: $child_depth Root depth: $root_depth | Calculated depth: $depth"
   if [ -f "$2/status" ]; then
     debug "${2} is an issue, maybe printing compact representation"
-    ( [ $(cat "$2/status") == $1 ]           || \
-      [ ! -z "$(grep -i "$1" "$2/author")" ] || \
-      [ ! -z "$(grep -i "$1" "$2/tags")" ] ) && issues_print_compact "$2" $depth
+    ( [ "$(cat "$2/status")" == $1 ]     || \
+      ( [ "$(cat "$2/status")" == "open" ] && \
+        ( [ ! -z "$(grep -i "$1" "$2/author")" ] || \
+          [ ! -z "$(grep -i "$1" "$2/tags")" ] )
+      )
+    ) && issues_print_compact "$2" $depth
   fi
 }
 
