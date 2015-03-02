@@ -12,6 +12,6 @@ issues_url="git@github.com:manpages/issues-demo.git"
 issues_statuses=('open' 'resolved' 'working' 'rejected') 
 # Debug level of issues program.
 ## none | errors | messages | info | debug
-issues_debug_level="messages"
+issues_debug_level="info"
 # Set to "manual" to prevent issues from automatically pushing changes to origin
 issues_push_mode="auto"

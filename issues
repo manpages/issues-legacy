@@ -35,4 +35,4 @@ issues_verbs=( ${issues_verbs[@]} ${issues_statuses[@]} )
 for i in ${issues_verbs[@]}; do
   [ $verb == $i ] && issues_$i $@ && ok
 done
-err "$(issues_usage)"
+issues_tree $verb

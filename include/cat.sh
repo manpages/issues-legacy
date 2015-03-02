@@ -31,10 +31,11 @@ issues_print_compact() {
 
 issues_cat() {
 	[ -z "$1" ] && err "issue id is required"
-  issue="$issues_root/$1"
+  search=${1//\//*\/*}
+  issue="$issues_root/$search"
 	debug "issues cat $*"
-  [ -d "$issue" ] || err "$id is not a valid id chain"
-  for child in $(find $issue -type d | xargs ls -1td); do
+  [ -z "$(ls $issue*)" ] && err "$id is not a valid id chain"
+  for child in $(find $issue* -type d | xargs ls -1td); do
     issues_print_pretty_ $child
   done
   return 0
@@ -42,12 +43,13 @@ issues_cat() {
 
 issues_tree() {
   [ -z "$1" ] && err "Issue id is required"
-  issue="$issues_root/$1"
+  search=${1//\//*\/*}
+  issue="$issues_root/$search"
   debug "Printing issue tree for $1"
-  debug "Children: $(ls -1tp $issue | grep /)"
+  debug "Children: $(ls -1tp $issue* | grep /)"
 
   root_depth=$(issues_dir_depth $issues_root)
-  child_depth=$(issues_dir_depth "$issue")
+  child_depth=$(issues_dir_depth $issue*)
   (( depth=$child_depth-$root_depth ))
   indent=""
   for x in $(seq 1 $depth); do
@@ -55,10 +57,10 @@ issues_tree() {
   done
   debug "Depth: $depth"
 
-  [ -d "$issue" ] || err "$id is not a valid id chain"
-  cat <(issues_print_pretty_ "$issue") <(echo -e "\n") | awk "{print \"${indent}|\"\$0}"
+  [ -z "$(ls $issue*)" ] && err "$id is not a valid id chain"
+  cat <(issues_print_pretty_ $issue*) <(echo -e "\n") | awk "{print \"${indent}|\"\$0}"
 
-  for child in $(ls -1tp $issue | grep /); do
+  for child in $(ls -1tp $issue* | grep /); do
     next="$1/$child"
     issues_tree ${next%/}
   done

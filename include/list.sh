@@ -18,13 +18,15 @@ issues_print_compact_maybe() {
   debug "Child depth: $child_depth Root depth: $root_depth | Calculated depth: $depth"
   if [ -f "$2/status" ]; then
     debug "${2} is an issue, maybe printing compact representation"
-    [ $(cat "$2/status") == $1 ] && issues_print_compact "$2" $depth
+    ( [ $(cat "$2/status") == $1 ]           || \
+      [ ! -z "$(grep -i "$1" "$2/author")" ] || \
+      [ ! -z "$(grep -i "$1" "$2/tags")" ] ) && issues_print_compact "$2" $depth
   fi
 }
 
 issues_list_do() {
   debug "Launching issues_list_do with $*"
-  [ -z "$1" ] && err "Status is required" || status="$1"
+  [ -z "$1" ] && err "Status, tag or author is required" || status="$1"
   [ -z "$2" ] && err "Id chain unspecified. Most certainly it's a bug in 'issues'!" || id="$2"
   [ -z "$3" ] || export issues_list_depth=$3
   [ $id == "/" ] && id=""
