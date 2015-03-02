@@ -38,7 +38,7 @@ issues_add_generic() {
   mkdir "$issue"
   echo "$title" > "$issue/title"
   [ -z $EDITOR ] && editor=vi || editor=$EDITOR
-  echo -e "${title}\n---" > "$issue/commentary"
+  echo -e "---" > "$issue/commentary"
   $editor "$issue/commentary"
   echo -n "open" > "$issue/status"
   echo -n "untagged" > "$issue/tags"
